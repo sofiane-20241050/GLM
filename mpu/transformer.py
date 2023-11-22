@@ -42,7 +42,7 @@ class PositionalEmbedding(torch.nn.Module):
         self.hidden_size = hidden_size
 
         inv_freq = 1 / (10000 ** (torch.arange(0.0, hidden_size, 2.0) / hidden_size))
-        self.register_buffer('inv_freq', inv_freq)
+        self.register_buffer('inv_freq', inv_freq)  # 该函数定义的模型参数保存在state_dict中，但是训练时不参与更新
 
     def forward(self, pos_seq, bsz=None):
         sinusoid_inp = torch.ger(pos_seq, self.inv_freq)
